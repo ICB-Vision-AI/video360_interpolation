@@ -81,12 +81,12 @@ Compare `results/demo1/imgt_pred_1.png` with `assets/demo1_gt_middle_frame.jpg`.
 Run demo2 with the ODV360 checkpoint:
 
 ```bash
-python demos/demo_2x.py \
+python demos/demo_recursive.py \
   --config cfgs/odv360_middle_frame.yaml \
   --ckpt checkpoints/odv360.pth \
-  --img0 assets/demo2/im1.png \
-  --img1 assets/demo2/im3.png \
-  --out_path results/demo2
+  --input_dir assets/demo2 \
+  --output_images results/demo2 \
+  --num_frames 7
 ```
 
 ## Datasets
