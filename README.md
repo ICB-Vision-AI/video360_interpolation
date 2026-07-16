@@ -45,10 +45,14 @@ git clone https://github.com/ICB-Vision-AI/video360_interpolation.git
 cd video360_interpolation
 conda create -n svi360 python=3.9
 conda activate svi360
+
+# Install PyTorch and torchvision for your CUDA/ROCm/CPU setup:
+# https://pytorch.org/get-started/locally/
+
 pip install -r requirements.txt
 ```
 
-The code is implemented in PyTorch and is intended to run with CUDA-enabled GPUs. Please make sure your local PyTorch/CUDA installation is compatible with your system.
+The code is implemented in PyTorch and is intended to run with CUDA-enabled GPUs. Install `torch` and `torchvision` separately according to your hardware setup, CUDA/ROCm version, or CPU-only environment. The code was tested with `torch==2.4.0` and `torchvision==0.19.0`.
 
 ## Pretrained Models
 
