@@ -50,6 +50,9 @@ conda activate svi360
 # https://pytorch.org/get-started/locally/
 
 pip install -r requirements.txt
+
+# Create folder to contain pretrained model
+mkdir checkpoints
 ```
 
 The code is implemented in PyTorch and is intended to run with CUDA-enabled GPUs. Install `torch` and `torchvision` separately according to your hardware setup, CUDA/ROCm version, or CPU-only environment. The code was tested with `torch==2.4.0` and `torchvision==0.19.0`.
@@ -74,7 +77,7 @@ Run demo1 with the FlowScape checkpoint:
 ```bash
 python demos/demo_2x.py \
   --config cfgs/flowscape_middle_frame.yaml \
-  --ckpt checkpoints/flowscape.pth \
+  --ckpt checkpoints/svi360_flowscape.pth \
   --img0 assets/demo1/img0.png \
   --img1 assets/demo1/img1.png \
   --out_path results/demo1
@@ -87,7 +90,7 @@ Run demo2 with the ODV360 checkpoint:
 ```bash
 python demos/demo_recursive.py \
   --config cfgs/odv360_middle_frame.yaml \
-  --ckpt checkpoints/odv360.pth \
+  --ckpt checkpoints/svi360_odv360.pth \
   --input_dir assets/demo2 \
   --output_images results/demo2 \
   --num_frames 7
