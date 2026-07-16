@@ -5,7 +5,6 @@ Convert FLOW360 layout into Vimeo-style frame layout.
 Input layout:
   <src>/
     train/<scene>/frames/<frame>.png
-    val/<scene>/frames/<frame>.png
     test/<scene>/frames/<frame>.png
 
 Output layout:
@@ -102,16 +101,16 @@ def main():
 
     train_entries: List[str] = []
     test_entries: List[str] = []
-    for split in ("train", "val", "test"):
+    for split in ("train", "test"):
         entries = convert_split(src_root, dst_root, split, window_size, stride)
-        if split in {"train", "val"}:
+        if split == "train":
             train_entries.extend(entries)
         else:
             test_entries.extend(entries)
 
     train_list_path = write_split_list(dst_root, list_prefix, "train", train_entries)
     test_list_path = write_split_list(dst_root, list_prefix, "test", test_entries)
-    print(f"[OK] train+val: wrote {len(train_entries)} entries -> {train_list_path}")
+    print(f"[OK] train: wrote {len(train_entries)} entries -> {train_list_path}")
     print(f"[OK] test: wrote {len(test_entries)} entries -> {test_list_path}")
 
     total = len(train_entries) + len(test_entries)

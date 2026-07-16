@@ -1,6 +1,7 @@
 # SVI360: Spherical Video Interpolation
 
 [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://icb-vision-ai.github.io/video360_interpolation/)
+[![Paper](https://img.shields.io/badge/arXiv-2607.11710-b31b1b.svg)](https://arxiv.org/pdf/2607.11710)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](#license)
 
 Official PyTorch implementation of **SVI360: Spherical Video Interpolation**.
@@ -9,9 +10,13 @@ SVI360 is designed for video frame interpolation in omnidirectional videos. Stan
 
 Project page: [https://icb-vision-ai.github.io/video360_interpolation/](https://icb-vision-ai.github.io/video360_interpolation/)
 
+Qualitative results show that perspective-frame interpolation methods struggle on spherical frames, especially near the poles where distortions are stronger, while our method handles these regions better.
+
+![Qualitative comparison](docs/assets/qualitative_comparison.png)
+
 ## Overview
 
-![SVI360 architecture](assets/svi360_architecture.png)
+![SVI360 architecture](docs/assets/SVI360.png)
 
 Given two input spherical frames, SVI360 predicts an intermediate frame at a target timestamp. The model uses a dual-branch architecture:
 
@@ -100,7 +105,7 @@ Dataset access:
 - **ODV360**: [Download](https://1drv.ms/u/c/546ebb34c1ce2d67/IQBs-pBDBNR1QacYlezVDaviAebhbVfSzFsr2qCSNxac7UM?e=Kh3tY4)
 - **360VFI**: please ask the paper authors for permission.
 
-Observed local dataset layouts:
+Original dataset layouts:
 
 ```text
 FlowScape/
@@ -232,10 +237,16 @@ Checkpoints and logs are written to the directory specified by `save_dir` in the
 
 ## Citation
 
-BibTeX will be added here.
-
 ```bibtex
-TODO
+@misc{nguyen2026svi360sphericalvideointerpolation,
+      title={SVI360: Spherical Video Interpolation}, 
+      author={Le-Kim Nguyen and Renato Martins and Pascal Vasseur and Cedric Demonceaux},
+      year={2026},
+      eprint={2607.11710},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2607.11710}, 
+}
 ```
 
 ## Acknowledgements

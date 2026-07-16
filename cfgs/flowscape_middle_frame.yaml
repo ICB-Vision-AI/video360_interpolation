@@ -29,10 +29,10 @@ data:
     name: datasets.middle_frame_interpolation.Vimeo90K_Test_Dataset
 
   train_loader:
-    batch_size: 24
+    batch_size: 4
     num_workers: 4
   val_loader:
-    batch_size: 16
+    batch_size: 4
     num_workers: 4
 
 logger:
