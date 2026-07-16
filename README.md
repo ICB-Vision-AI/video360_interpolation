@@ -258,7 +258,7 @@ Checkpoints and logs are written to the directory specified by `save_dir` in the
 
 ## Acknowledgements
 
-This work builds on prior research in video frame interpolation, spherical optical flow, and omnidirectional video understanding, including [AMT](https://github.com/MCG-NKU/AMT.git) and [PriOr-Flow](https://github.com/longliangLiu/PriOr-Flow.git).
+This work builds on prior research in video frame interpolation, spherical optical flow, and omnidirectional video understanding, including [AMT](https://github.com/MCG-NKU/AMT.git) and [PriOr-Flow](https://github.com/longliangLiu/PriOr-Flow.git). We sincerely thank the authors of [360VFI](https://arxiv.org/pdf/2407.14066) for generously sharing their dataset.
 
 This work was funded by the project ANR TSIA DEVIN (ANR-23-IAS2-0001), ANER MOVIS from "Region Bourgogne-Franche-Comte" and ANR MANYVIS (ANR-23-CE23-0003-01), to whom we are grateful.
 
