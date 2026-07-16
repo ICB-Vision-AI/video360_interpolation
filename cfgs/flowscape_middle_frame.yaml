@@ -1,0 +1,60 @@
+exp_name: flowscape
+seed: 2026
+epochs: 300
+distributed: false
+lr: 2e-4
+lr_min: 2e-5
+weight_decay: 0.0
+resume_state: null
+save_dir: work_dir
+eval_interval: 1
+
+network:
+  name: networks.svi360.Model
+  params:
+    corr_radius: 3
+    corr_lvls: 4
+    num_flows: 5
+
+data:
+  dataset_dir: data/flowscape_triplet
+  train:
+    name: datasets.middle_frame_interpolation.Vimeo90K_Train_Dataset
+    params:
+      augment: true
+  val:
+    name: datasets.middle_frame_interpolation.Vimeo90K_Test_Dataset
+
+  test:
+    name: datasets.middle_frame_interpolation.Vimeo90K_Test_Dataset
+
+  train_loader:
+    batch_size: 24
+    num_workers: 4
+  val_loader:
+    batch_size: 16
+    num_workers: 4
+
+logger:
+  use_wandb: false
+  project: flowscape
+  wandb_log_samples: 1
+  resume_id: null
+
+losses:
+  - {
+    name: losses.spherical_loss.CharbonnierLoss,
+    nickname: l_rec,
+    params: {
+      loss_weight: 1.0,
+      keys: [imgt_pred, imgt]
+    }
+  }
+  - {
+    name: losses.spherical_loss.TernaryLoss,
+    nickname: l_ter,
+    params: {
+      loss_weight: 1.0,
+      keys: [imgt_pred, imgt]
+    }
+  }

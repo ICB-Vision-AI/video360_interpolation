@@ -1,0 +1,64 @@
+exp_name: flow360_arbitrary
+seed: 2026
+epochs: 300
+distributed: false
+lr: 20e-5
+lr_min: 2e-5
+weight_decay: 0.0
+resume_state: null
+save_dir: work_dir
+eval_interval: 1
+
+network:
+  name: networks.svi360.Model
+  params:
+    corr_radius: 3
+    corr_lvls: 4
+    num_flows: 5
+
+data:
+  dataset_dir: data/flow360_nonuplet
+  train:
+    name: datasets.arbitrary_frame_interpolation.Vimeo90K_Nonuplet_Train_Dataset
+    params:
+      split: train
+      augment: true
+  val:
+    name: datasets.arbitrary_frame_interpolation.Vimeo90K_Nonuplet_Test_Dataset
+    params:
+      split: test
+      random_timestep: true # If true, only take one value in range (0,1). If false, interpolate frame at all timestamp
+  test:
+    name: datasets.arbitrary_frame_interpolation.Vimeo90K_Nonuplet_Test_Dataset
+    params:
+      split: test
+  train_loader:
+    batch_size: 4
+    num_workers: 4
+  val_loader:
+    batch_size: 4
+    num_workers: 4
+
+logger:
+  use_wandb: false
+  project: flow360_arbitrary
+  wandb_log_samples: 1
+  resume_id: null
+
+losses:
+  - {
+    name: losses.spherical_loss.CharbonnierLoss,
+    nickname: l_rec,
+    params: {
+      loss_weight: 1.0,
+      keys: [imgt_pred, imgt]
+    }
+  }
+  - {
+    name: losses.spherical_loss.TernaryLoss,
+    nickname: l_ter,
+    params: {
+      loss_weight: 1.0,
+      keys: [imgt_pred, imgt]
+    }
+  }
