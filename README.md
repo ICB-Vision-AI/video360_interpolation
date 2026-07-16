@@ -59,7 +59,7 @@ The code is implemented in PyTorch and is intended to run with CUDA-enabled GPUs
 
 ## Pretrained Models
 
-Pretrained checkpoints can be downloaded here.
+Pretrained models can be downloaded here.
 
 | Model | Training data | Checkpoint |
 | --- | --- | --- |
