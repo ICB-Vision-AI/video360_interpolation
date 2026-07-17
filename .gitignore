@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Datasets and model outputs
+data/
+checkpoints/
+outputs/
+results/
+wandb/
+logs/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+
+# System files
+.DS_Store
