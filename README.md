@@ -174,6 +174,8 @@ Use the FlowScape checkpoint for virtual scene inference and the ODV360 checkpoi
 
 **Note:** For inference, evaluation, or training, update the model configuration in the config file to choose between the SVI360 model and the Lite_SVI360 model.
 
+If inference runs out of memory, add `--resize "(W,H)"` to resize inputs before they enter the model, for example `--resize "(512,256)"`.
+
 ### Middle-frame interpolation
 
 Use `demos/demo_2x.py` to interpolate one middle frame between two input equirectangular images:
