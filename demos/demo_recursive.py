@@ -4,6 +4,7 @@ import os.path as osp
 import sys
 from typing import List
 
+import cv2
 import torch
 from omegaconf import OmegaConf
 
@@ -31,6 +32,7 @@ def parse_args():
         default=7,
         help="Number of interpolated frames to insert between each pair. Must be 2**k - 1.",
     )
+    parser.add_argument("--resize", default=None, help="Resize inputs as '(W,H)', e.g. '(512,256)'")
     return parser.parse_args()
 
 
@@ -75,8 +77,10 @@ def load_model(cfg_path, ckpt_path, device):
     return model
 
 
-def load_frame_tensor(path: str, device: torch.device):
+def load_frame_tensor(path: str, device: torch.device, resize=None):
     img = read(path)
+    if resize is not None:
+        img = cv2.resize(img, resize, interpolation=cv2.INTER_LINEAR)
     img_t = img2tensor(img).float().to(device)
     return img_t
 
@@ -110,16 +114,17 @@ def write_upsampled_outputs(
     device: torch.device,
     output_dir: str,
     recursion_depth: int,
+    resize=None,
 ):
     ensure_dir(output_dir)
 
-    prev_frame = load_frame_tensor(image_paths[0], device)
+    prev_frame = load_frame_tensor(image_paths[0], device, resize)
     base_shape = tuple(prev_frame.shape[-2:])
     frame_count = 1
 
     save_frame(prev_frame, output_dir, 0)
     for path in image_paths[1:]:
-        next_frame = load_frame_tensor(path, device)
+        next_frame = load_frame_tensor(path, device, resize)
         if tuple(next_frame.shape[-2:]) != base_shape:
             raise ValueError(f"All input images must share the same size. Mismatch at {path}.")
 
@@ -139,8 +144,9 @@ def main():
     upsample_factor = args.num_frames + 1
     image_paths = list_image_paths(args.input_dir)
     model = load_model(args.config, args.ckpt, device)
+    resize = None if args.resize is None else tuple(map(int, args.resize[1:-1].split(",")))
     total_frames = write_upsampled_outputs(
-        model, image_paths, device, args.output_images, recursion_depth
+        model, image_paths, device, args.output_images, recursion_depth, resize
     )
 
     print(f"Wrote {total_frames} frames to [{args.output_images}].")

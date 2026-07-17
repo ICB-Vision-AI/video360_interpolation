@@ -3,6 +3,7 @@ import os
 import os.path as osp
 import sys
 
+import cv2
 import torch
 from omegaconf import OmegaConf
 
@@ -21,6 +22,7 @@ def parse_args():
     parser.add_argument('-x', '--img0', required=True, help='Path to first image')
     parser.add_argument('-y', '--img1', required=True, help='Path to second image')
     parser.add_argument('-o', '--out_path', default='results', help='Output images directory')
+    parser.add_argument('--resize', default=None, help="Resize inputs as '(W,H)', e.g. '(512,256)'")
     return parser.parse_args()
 
 
@@ -67,9 +69,13 @@ if __name__ == '__main__':
     ensure_dir(args.out_path)
 
     model = load_model(args.config, args.ckpt, device)
+    resize = None if args.resize is None else tuple(map(int, args.resize[1:-1].split(",")))
 
     img0 = read(args.img0)
     img1 = read(args.img1)
+    if resize is not None:
+        img0 = cv2.resize(img0, resize, interpolation=cv2.INTER_LINEAR)
+        img1 = cv2.resize(img1, resize, interpolation=cv2.INTER_LINEAR)
     img0_t = img2tensor(img0).to(device)
     img1_t = img2tensor(img1).to(device)
 
